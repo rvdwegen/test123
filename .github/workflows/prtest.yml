@@ -7,10 +7,13 @@ on:
       - main
       - master
 
+permissions:
+  pull-requests: write
+  issues: write
+
 jobs:
   check-branch:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: Check and Comment on PR
         if: |
