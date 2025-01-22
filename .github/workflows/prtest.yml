@@ -31,14 +31,15 @@ jobs:
           script: |
             let message = '';
 
-            message += '🔄 If you are attempting to update your CIPP repo please follow the instructions at: https://docs.cipp.app/setup/self-hosting-guide/updating\n\n';
+            message += '🔄 If you are attempting to update your CIPP repo please follow the instructions at: https://docs.cipp.app/setup/self-hosting-guide/updating ';
+            message += '\n\n';
 
-            # Check if PR is targeting main/master
+            // Check if PR is targeting main/master
             if (context.payload.pull_request.base.ref === 'main' || context.payload.pull_request.base.ref === 'master') {
               message += '⚠️ PRs cannot target the main branch directly. If you are attempting to contribute code please PR to the dev branch.\n\n';
             }
 
-            # Check if PR is from a fork's main/master branch
+            // Check if PR is from a fork's main/master branch
             if (context.payload.pull_request.head.repo.fork && 
                 (context.payload.pull_request.head.ref === 'main' || context.payload.pull_request.head.ref === 'master')) {
               message += '⚠️ This PR cannot be merged because it originates from your fork\'s main/master branch. If you are attempting to contribute code please PR from your dev branch or another non-main/master branch.\n\n';
