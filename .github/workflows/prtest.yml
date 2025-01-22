@@ -1,0 +1,33 @@
+name: PR Branch Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check fork and branch
+        if: |
+          github.event.pull_request.head.repo.fork == true &&
+          (github.event.pull_request.head.ref == 'main' || github.event.pull_request.head.ref == 'master')
+        run: |
+          echo "::error::PRs from forks must not come from main or master branch"
+          exit 1
+
+      - name: Comment on PR
+        if: |
+          github.event.pull_request.head.repo.fork == true &&
+          (github.event.pull_request.head.ref == 'main' || github.event.pull_request.head.ref == 'master')
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.name,
+              body: '⚠️ This PR cannot be merged because it comes from a fork\'s main/master branch. Please create a feature branch and submit your PR from there.'
+            })
+            
