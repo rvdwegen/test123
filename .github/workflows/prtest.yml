@@ -10,6 +10,8 @@ on:
 jobs:
   check-branch:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Check and Comment on PR
         if: |
@@ -31,16 +33,14 @@ jobs:
             
             // Post the comment
             await github.rest.issues.createComment({
+              ...context.repo,
               issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.name,
               body: message
             });
             
             // Close the PR
             await github.rest.pulls.update({
+              ...context.repo,
               pull_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.name,
               state: 'closed'
             });
