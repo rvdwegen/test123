@@ -15,6 +15,24 @@ jobs:
   check-branch:
     runs-on: ubuntu-latest
     steps:
+      - name: Check Token Permissions
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const response = await github.rest.apps.getRepoInstallation({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            console.log('Installation ID:', response.data.id);
+            
+            // List permissions
+            console.log('Token Permissions:', {
+              issues: process.env.GITHUB_TOKEN_PERMISSIONS_ISSUES,
+              pullRequests: process.env.GITHUB_TOKEN_PERMISSIONS_PULL_REQUESTS,
+              all: process.env
+            });
+
       - name: Check and Comment on PR
         if: |
           (github.event.pull_request.head.repo.fork == true && 
