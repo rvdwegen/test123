@@ -1,15 +1,18 @@
 name: PR Branch Check
 
+# Add repository-level permissions
+permissions:
+  pull-requests: write
+  issues: write
+  contents: write
+  statuses: write
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
       - main
       - master
-
-permissions:
-  pull-requests: write
-  issues: write
 
 jobs:
   check-branch:
