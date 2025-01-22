@@ -31,6 +31,8 @@ jobs:
           script: |
             let message = '';
 
+            message += '🔄 If you are attempting to update your CIPP repo please follow the instructions at: https://docs.cipp.app/setup/self-hosting-guide/updating\n\n';
+
             # Check if PR is targeting main/master
             if (context.payload.pull_request.base.ref === 'main' || context.payload.pull_request.base.ref === 'master') {
               message += '⚠️ PRs cannot target the main branch directly. If you are attempting to contribute code please PR to the dev branch.\n\n';
@@ -42,7 +44,6 @@ jobs:
               message += '⚠️ This PR cannot be merged because it originates from your fork\'s main/master branch. If you are attempting to contribute code please PR from your dev branch or another non-main/master branch.\n\n';
             }
 
-            message += '🔄 If you are attempting to update your CIPP repo please follow the instructions at: https://docs.cipp.app/setup/self-hosting-guide/updating\n\n';
             message += '🔒 This PR will now be automatically closed due to the above violation(s).';
             
             // Post the comment
