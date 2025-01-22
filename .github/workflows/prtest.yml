@@ -3,6 +3,7 @@ name: PR Branch Check
 # Add repository-level permissions
 permissions:
   pull-requests: write
+  id-token: write
   issues: write
   contents: write
   statuses: write
