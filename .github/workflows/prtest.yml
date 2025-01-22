@@ -10,10 +10,7 @@ on:
 jobs:
   check-branch:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      issues: write
-      contents: write
+    permissions: write-all
     steps:
       - name: Check and Comment on PR
         if: |
