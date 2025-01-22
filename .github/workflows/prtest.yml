@@ -4,7 +4,7 @@ name: PR Branch Check
 permissions: write-all
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
       - main
